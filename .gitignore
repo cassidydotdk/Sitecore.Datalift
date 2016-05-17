@@ -1,0 +1,14 @@
+publish/*
+.vs/**
+
+**/bin
+**/obj
+
+# NuGet packages
+packages/*
+!packages/repositories.config
+Build/*.nupkg
+
+# Ignore user-scoped solution and project settings
+*.user
+*.suo
