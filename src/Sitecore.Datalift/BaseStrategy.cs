@@ -1,4 +1,5 @@
-﻿using Sitecore.Data;
+﻿using System.Collections.Generic;
+using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Data.Templates;
@@ -7,6 +8,13 @@ namespace Sitecore.Datalift
 {
     public abstract class BaseStrategy : IDataliftStrategy
     {
+        protected BaseStrategy()
+        {
+            ActionLog = new List<string>();
+        }
+
+        public List<string> ActionLog { get; }
+
         public abstract Item Resolve(string datasourceString, string templateIdentifier, Item contextItem);
 
         protected virtual Template GetTemplate(string templateIdentifier, Database database)

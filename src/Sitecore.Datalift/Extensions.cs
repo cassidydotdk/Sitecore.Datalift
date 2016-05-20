@@ -1,6 +1,7 @@
 ﻿using System.Web.Mvc;
 using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
+using Sitecore.Mvc.Presentation;
 
 namespace Sitecore.Datalift
 {
@@ -20,9 +21,11 @@ namespace Sitecore.Datalift
         public static Item GetActionItem(this IController controller, string datasourceString, string templateIdentifier = null, Item contextItem = null, IDataliftStrategy strategy = null)
         {
             Assert.ArgumentNotNullOrEmpty(datasourceString, nameof(datasourceString));
-            Assert.ArgumentNotNullOrEmpty(templateIdentifier, nameof(templateIdentifier));
 
-            var att = GetStrategyAttribute(controller);
+            IDataliftAttribute att = null;
+            if(controller != null)
+                att = GetStrategyAttribute(controller);
+
             if (strategy == null && att != null)
             {
                 strategy = att.Strategy;
@@ -40,6 +43,11 @@ namespace Sitecore.Datalift
                 contextItem = Context.Item;
 
             return strategy.Resolve(datasourceString, templateIdentifier, contextItem);
+        }
+
+        public static Item GetActionItem(this RenderingContext renderingContext, string templateIdentifier = null, IDataliftStrategy strategy = null)
+        {
+            return GetActionItem(null, renderingContext.Rendering.DataSource, templateIdentifier, renderingContext.ContextItem, strategy);
         }
     }
 }
