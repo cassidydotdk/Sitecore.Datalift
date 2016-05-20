@@ -7,6 +7,7 @@ namespace Sitecore.Datalift
     {
         public override Item Resolve(string datasourceString, string templateIdentifier, Item contextItem)
         {
+            // This strategy makes no sense, without knowing the base template we're after
             Assert.ArgumentNotNullOrEmpty(templateIdentifier, nameof(templateIdentifier));
             Assert.ArgumentNotNull(contextItem, nameof(contextItem));
 

@@ -2,12 +2,13 @@
 using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 using Sitecore.Data.Templates;
-using Sitecore.Sites;
 
 namespace Sitecore.Datalift
 {
     public abstract class BaseStrategy : IDataliftStrategy
     {
+        public abstract Item Resolve(string datasourceString, string templateIdentifier, Item contextItem);
+
         protected virtual Template GetTemplate(string templateIdentifier, Database database)
         {
             return TemplateManager.GetTemplate(templateIdentifier, database);
@@ -18,7 +19,5 @@ namespace Sitecore.Datalift
             var t = TemplateManager.GetTemplate(candidate);
             return t.InheritsFrom(template.ID);
         }
-
-        public abstract Item Resolve(string datasourceString, string templateIdentifier, Item contextItem);
     }
 }

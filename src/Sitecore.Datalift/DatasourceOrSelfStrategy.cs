@@ -1,4 +1,5 @@
 ﻿using Sitecore.Data.Items;
+using Sitecore.Data.Templates;
 using Sitecore.Diagnostics;
 
 namespace Sitecore.Datalift
@@ -7,11 +8,14 @@ namespace Sitecore.Datalift
     {
         public override Item Resolve(string datasourceString, string templateIdentifier, Item contextItem)
         {
-            Assert.ArgumentNotNullOrEmpty(templateIdentifier, nameof(templateIdentifier));
             Assert.ArgumentNotNull(contextItem, nameof(contextItem));
 
-            var t = GetTemplate(templateIdentifier, contextItem.Database);
-            Assert.IsNotNull(t, $"Template: {templateIdentifier}");
+            Template t = null;
+            if (!string.IsNullOrWhiteSpace(templateIdentifier))
+            {
+                t = GetTemplate(templateIdentifier, contextItem.Database);
+                Assert.IsNotNull(t, $"Template: {templateIdentifier}");
+            }
 
             Log.Debug($"Action Item resolving. Strategy: {GetType().FullName}, Database: {Context.Database.Name}, Language: {Context.Language.Name}, Expected Base Template: {t.FullName}, Context Item: {contextItem.Paths.FullPath}");
 
@@ -33,7 +37,9 @@ namespace Sitecore.Datalift
                 actionItem = datasourceItem;
             }
 
-            if (actionItem != null)
+            // WTF resharper?
+            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
+            if (actionItem != null && t != null)
             {
                 if (!InheritsTemplate(actionItem, t))
                 {

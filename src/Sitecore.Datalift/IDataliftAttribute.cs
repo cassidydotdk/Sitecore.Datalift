@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Sitecore.Datalift
+﻿namespace Sitecore.Datalift
 {
     public interface IDataliftAttribute
     {
