@@ -17,7 +17,7 @@ namespace Sitecore.Datalift
             return null;
         }
 
-        public static Item GetActionItem(this IController controller, string datasourceString, string templateIdentifier = null, Item contextItem = null, IStrategy strategy = null)
+        public static Item GetActionItem(this IController controller, string datasourceString, string templateIdentifier = null, Item contextItem = null, IDataliftStrategy strategy = null)
         {
             Assert.ArgumentNotNullOrEmpty(datasourceString, nameof(datasourceString));
             Assert.ArgumentNotNullOrEmpty(templateIdentifier, nameof(templateIdentifier));

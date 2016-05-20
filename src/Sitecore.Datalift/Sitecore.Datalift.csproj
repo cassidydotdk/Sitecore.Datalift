@@ -117,7 +117,7 @@
     <Compile Include="DatasourceOrAscendantStrategy.cs" />
     <Compile Include="DatasourceOrSelfStrategy.cs" />
     <Compile Include="DatasourceOrSiteRootStrategy.cs" />
-    <Compile Include="IStrategy.cs" />
+    <Compile Include="IDataliftStrategy.cs" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

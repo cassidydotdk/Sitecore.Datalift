@@ -2,7 +2,7 @@
 
 namespace Sitecore.Datalift
 {
-    [AttributeUsage(AttributeTargets.Class, Inherited = false)]
+    [AttributeUsage(AttributeTargets.Class)]
     public class DatasourceOrAscendantAttribute : Attribute, IDataliftAttribute
     {
         public DatasourceOrAscendantAttribute(string templateIdentifier)
@@ -12,6 +12,6 @@ namespace Sitecore.Datalift
         }
 
         public string TemplateIdentifier { get; }
-        public IStrategy Strategy { get; set; }
+        public IDataliftStrategy Strategy { get; set; }
     }
 }

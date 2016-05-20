@@ -6,7 +6,7 @@ using Sitecore.Sites;
 
 namespace Sitecore.Datalift
 {
-    public abstract class BaseStrategy : IStrategy
+    public abstract class BaseStrategy : IDataliftStrategy
     {
         protected virtual Template GetTemplate(string templateIdentifier, Database database)
         {
