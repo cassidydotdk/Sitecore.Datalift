@@ -5,7 +5,6 @@ namespace Sitecore.Datalift
     [AttributeUsage(AttributeTargets.Class)]
     public class DatasourceOrAscendantAttribute : Attribute, IDataliftAttribute
     {
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Advanced)]
         public DatasourceOrAscendantAttribute(string templateIdentifier)
         {
             TemplateIdentifier = templateIdentifier;

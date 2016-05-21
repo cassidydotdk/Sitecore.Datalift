@@ -5,11 +5,16 @@ namespace Sitecore.Datalift
     [AttributeUsage(AttributeTargets.Class)]
     public class DatasourceOrSiteRootAttribute : Attribute, IDataliftAttribute
     {
-        [System.ComponentModel.EditorBrowsable(System.ComponentModel.EditorBrowsableState.Never)]
         public DatasourceOrSiteRootAttribute(string templateIdentifier)
         {
             TemplateIdentifier = templateIdentifier;
             Strategy = new DatasourceOrSiteRootStrategy();
+        }
+
+        public DatasourceOrSiteRootAttribute(string templateIdentifier, string siteRootPath)
+        {
+            TemplateIdentifier = templateIdentifier;
+            Strategy = new DatasourceOrSiteRootStrategy(siteRootPath);
         }
 
         public string TemplateIdentifier { get; }

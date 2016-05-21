@@ -1,19 +1,18 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sitecore.Data;
-using Sitecore.Data.Templates;
 
 namespace Sitecore.Datalift.Tests
 {
     [TestClass]
     public class DatasourceOrSelfStrategyTests
     {
-        private Database _db;
-        private readonly ID _newsId = ID.NewID;
-        private readonly ID _authId = ID.NewID;
-        private readonly ID _cateId = ID.NewID;
+        private static readonly ID _authId = ID.NewID;
+        private static readonly ID _cateId = ID.NewID;
+        private static readonly ID _newsId = ID.NewID;
+        private static Database _db;
 
-        [TestInitialize]
-        public void Initialise()
+        [ClassInitialize]
+        public static void Initialise(TestContext context)
         {
             var root = SitecoreFaker.MakeItem("fakesitecore", ID.NewID, "root", null);
             var content = SitecoreFaker.MakeItem("content", ID.NewID, "content", root);

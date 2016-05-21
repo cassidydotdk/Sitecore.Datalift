@@ -3,8 +3,12 @@ using Sitecore.Data.Items;
 
 namespace Sitecore.Datalift.Tests
 {
-    public class TestableDatasourceOrSelfStrategy : DatasourceOrSelfStrategy
+    public class TestableDatasourceOrSiteRootStrategy : DatasourceOrSiteRootStrategy
     {
+        public TestableDatasourceOrSiteRootStrategy(string contextSiteStartPath) : base(contextSiteStartPath)
+        {
+        }
+
         protected override bool InheritsTemplate(Item candidate, string templateIdentifier)
         {
             ID id = ID.Null;

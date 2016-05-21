@@ -1,4 +1,5 @@
-﻿using Sitecore.Data.Items;
+﻿using System.Diagnostics.Eventing.Reader;
+using Sitecore.Data.Items;
 using Sitecore.Data.Templates;
 using Sitecore.Diagnostics;
 
@@ -6,6 +7,17 @@ namespace Sitecore.Datalift
 {
     public class DatasourceOrSiteRootStrategy : BaseStrategy
     {
+        private readonly string _contextSiteStartPath;
+
+        public DatasourceOrSiteRootStrategy()
+        {
+        }
+
+        public DatasourceOrSiteRootStrategy(string contextSiteStartPath)
+        {
+            _contextSiteStartPath = contextSiteStartPath;
+        }
+
         public override Item Resolve([NotNull] string datasourceString, [NotNull] Item contextItem, [CanBeNull] string templateIdentifier = null)
         {
             Assert.ArgumentNotNull(contextItem, nameof(contextItem));
@@ -26,17 +38,23 @@ namespace Sitecore.Datalift
             }
             else
             {
-                var siteRoot = contextItem.Database.GetItem(Context.Site.StartPath);
+                Item siteRoot;
+
+                if (!string.IsNullOrEmpty(_contextSiteStartPath))
+                    siteRoot = contextItem.Database.GetItem(_contextSiteStartPath);
+                else
+                    siteRoot = contextItem.Database.GetItem(Context.Site.StartPath);
+
+#if !DEBUG
                 if (siteRoot == null || siteRoot.Versions.Count == 0)
                 {
                     siteRoot = null;
                 }
+#endif
 
                 actionItem = siteRoot;
             }
 
-            // WTF resharper?  
-            // ReSharper disable once ConditionIsAlwaysTrueOrFalse
             if (actionItem != null && templateIdentifier != null)
             {
                 if (!InheritsTemplate(actionItem, templateIdentifier))

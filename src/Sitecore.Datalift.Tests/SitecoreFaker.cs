@@ -1,29 +1,27 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
+﻿using System.Reflection;
 using Sitecore.Data;
 using Sitecore.Data.Items;
 using Sitecore.Globalization;
 using Sitecore.Reflection;
-using Version = Sitecore.Data.Version;
 
 namespace Sitecore.Datalift.Tests
 {
     public static class SitecoreFaker
     {
         private static readonly Database Db;
+        private static readonly MyDatabase mdb;
 
         static SitecoreFaker()
         {
-            Db = (Database)ReflectionUtil.CreateObject(typeof(Database), new object[] { "unittest" });
-            var mdb = new MyDatabase(Db);
+            Db = (Database) ReflectionUtil.CreateObject(typeof (Database), new object[] {"unittest"});
+            mdb = new MyDatabase(Db);
 
-            MethodBase originalMethod = Db.GetType().GetMethod("GetItem", BindingFlags.Public | BindingFlags.Instance, null, CallingConventions.HasThis, new[] { typeof(string) }, null);
-            MethodBase newMethod = mdb.GetType().GetMethod("GetItem", BindingFlags.Instance | BindingFlags.Public, null, CallingConventions.HasThis, new[] { typeof(string) }, null);
+            MethodBase originalMethod = Db.GetType().GetMethod("GetItem", BindingFlags.Public | BindingFlags.Instance, null, CallingConventions.HasThis, new[] {typeof (string)}, null);
+            MethodBase newMethod = mdb.GetType().GetMethod("GetItem", BindingFlags.Instance | BindingFlags.Public, null, CallingConventions.HasThis, new[] {typeof (string)}, null);
             MethodUtil.ReplaceMethod(newMethod, originalMethod);
 
-            originalMethod = Db.GetType().GetMethod("GetItem", BindingFlags.Public | BindingFlags.Instance, null, CallingConventions.HasThis, new[] { typeof(ID) }, null);
-            newMethod = mdb.GetType().GetMethod("GetItem", BindingFlags.Instance | BindingFlags.Public, null, CallingConventions.HasThis, new[] { typeof(ID) }, null);
+            originalMethod = Db.GetType().GetMethod("GetItem", BindingFlags.Public | BindingFlags.Instance, null, CallingConventions.HasThis, new[] {typeof (ID)}, null);
+            newMethod = mdb.GetType().GetMethod("GetItem", BindingFlags.Instance | BindingFlags.Public, null, CallingConventions.HasThis, new[] {typeof (ID)}, null);
             MethodUtil.ReplaceMethod(newMethod, originalMethod);
         }
 
@@ -49,7 +47,7 @@ namespace Sitecore.Datalift.Tests
 
             var ni = new MyItem(name, fullpath, id, data, Db, parentItem);
             MyDatabase.MyItems.Add(ni);
-            if(!MyDatabase.TemplateMap.ContainsKey(templateName))
+            if (!MyDatabase.TemplateMap.ContainsKey(templateName))
                 MyDatabase.TemplateMap.Add(templateName, templateId);
             return ni;
         }
