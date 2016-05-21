@@ -4,6 +4,6 @@ namespace Sitecore.Datalift
 {
     public interface IDataliftStrategy
     {
-        Item Resolve(string datasourceString, string templateIdentifier, Item contextItem);
+        Item Resolve(string datasourceString, Item contextItem, string templateIdentifier);
     }
 }

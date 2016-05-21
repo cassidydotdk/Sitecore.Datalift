@@ -96,6 +96,7 @@
     <Compile Include="MyItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SitecoreFaker.cs" />
+    <Compile Include="TestableDatasourceOrSelfStrategy.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

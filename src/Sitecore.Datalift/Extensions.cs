@@ -23,7 +23,7 @@ namespace Sitecore.Datalift
             Assert.ArgumentNotNullOrEmpty(datasourceString, nameof(datasourceString));
 
             IDataliftAttribute att = null;
-            if(controller != null)
+            if (controller != null)
                 att = GetStrategyAttribute(controller);
 
             if (strategy == null && att != null)
@@ -42,7 +42,7 @@ namespace Sitecore.Datalift
             if (contextItem == null)
                 contextItem = Context.Item;
 
-            return strategy.Resolve(datasourceString, templateIdentifier, contextItem);
+            return strategy.Resolve(datasourceString, contextItem, templateIdentifier);
         }
 
         public static Item GetActionItem(this RenderingContext renderingContext, string templateIdentifier = null, IDataliftStrategy strategy = null)

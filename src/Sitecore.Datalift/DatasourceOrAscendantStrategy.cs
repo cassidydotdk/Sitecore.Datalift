@@ -5,16 +5,11 @@ namespace Sitecore.Datalift
 {
     public class DatasourceOrAscendantStrategy : BaseStrategy
     {
-        public override Item Resolve(string datasourceString, string templateIdentifier, Item contextItem)
+        public override Item Resolve([NotNull] string datasourceString, [NotNull] Item contextItem, [NotNull] string templateIdentifier)
         {
             // This strategy makes no sense, without knowing the base template we're after
-            Assert.ArgumentNotNullOrEmpty(templateIdentifier, nameof(templateIdentifier));
+            Assert.ArgumentNotNull(templateIdentifier, nameof(templateIdentifier));
             Assert.ArgumentNotNull(contextItem, nameof(contextItem));
-
-            var t = GetTemplate(templateIdentifier, contextItem.Database);
-            Assert.IsNotNull(t, $"Template: {templateIdentifier}");
-
-            Log.Debug($"Action Item resolving. Strategy: {GetType().FullName}, Database: {Context.Database.Name}, Language: {Context.Language.Name}, Expected Base Template: {t.FullName}, Context Item: {contextItem.Paths.FullPath}");
 
             Item actionItem;
 
@@ -24,11 +19,10 @@ namespace Sitecore.Datalift
 
                 if (datasourceItem == null || datasourceItem.Versions.Count == 0)
                 {
-                    Log.Debug(datasourceItem == null ? $"Datasource: {datasourceString} resolved to NULL" : $"Datasource: {datasourceString} resolved to {datasourceItem.Paths.FullPath} but has 0 versions");
                     datasourceItem = null;
                 }
 
-                if (!InheritsTemplate(datasourceItem, t))
+                if (!InheritsTemplate(datasourceItem, templateIdentifier))
                     datasourceItem = null;
 
                 actionItem = datasourceItem;
@@ -37,7 +31,7 @@ namespace Sitecore.Datalift
             {
                 actionItem = contextItem;
 
-                while (!InheritsTemplate(actionItem, t))
+                while (!InheritsTemplate(actionItem, templateIdentifier))
                 {
                     actionItem = actionItem.Parent;
                     if (actionItem == null)
