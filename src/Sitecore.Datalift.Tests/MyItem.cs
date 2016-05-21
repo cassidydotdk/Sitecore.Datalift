@@ -7,13 +7,13 @@ namespace Sitecore.Datalift.Tests
     {
         public MyItem(string name, string fullpath, ID itemId, ItemData data, Database database, Item parentItem) : base(itemId, data, database)
         {
-            Name = name;
-            Parent = parentItem;
+            MyName = name;
+            MyParent = parentItem;
             FullPath = fullpath;
         }
 
-        public new string Name { get; set; }
-        public new Item Parent { get; set; }
+        public string MyName { get; set; }
+        public Item MyParent { get; set; }
         public string FullPath { get; set; }
     }
 }

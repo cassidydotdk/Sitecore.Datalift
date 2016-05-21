@@ -3,7 +3,7 @@
 namespace Sitecore.Datalift.Tests
 {
     [TestClass]
-    public class DatasourceOrSiteRootStrategyTests
+    public class DatasourceOrAscendantStrategyTests
     {
         [ClassInitialize]
         public static void Initialise(TestContext context)
@@ -27,68 +27,71 @@ namespace Sitecore.Datalift.Tests
             SitecoreFaker.Instance.MakeItem("news-4", "news", authReynolds);
             SitecoreFaker.Instance.MakeItem("news-5", "news", news2016);
             SitecoreFaker.Instance.MakeItem("news-6", "news", news2017);
+
+            SitecoreFaker.Instance.MakeItem("contentpage-1", "news", section1);
+            SitecoreFaker.Instance.MakeItem("contentpage-2", "news", section1);
+            SitecoreFaker.Instance.MakeItem("contentpage-3", "news", section1);
+            SitecoreFaker.Instance.MakeItem("contentpage-4", "news", section2);
+            SitecoreFaker.Instance.MakeItem("contentpage-5", "news", section2);
         }
 
         [TestMethod]
-        public void DatasourceOrSiteRootStrategyTests_test_valid_datasource()
+        public void DatasourceOrAscendantStrategyTests_test_valid_datasource()
         {
             var home = SitecoreFaker.Instance.Database.GetItem("/fakesitecore/content/home");
-            var strategy = new TestableDatasourceOrSiteRootStrategy("/fakesitecore/content/home");
+            var strategy = new TestableDatasourceOrAscendantStrategy();
             var authorId = SitecoreFaker.Instance.MyDatabase.GetTemplateIdFromName("author");
 
-            // The DS is valid, and is has no template to go on. It has no choice but to just return the DS
-            var result = strategy.Resolve("/fakesitecore/content/home/news-2016/mark-cassidy", home);
-            Assert.IsNotNull(result);
-            Assert.IsTrue(result.TemplateID == authorId);
-
-            result = strategy.Resolve("/fakesitecore/content/home/news-2016/mark-cassidy", home, "author");
+            var result = strategy.Resolve("/fakesitecore/content/home/news-2016/mark-cassidy", home, "author");
             Assert.IsNotNull(result);
             Assert.IsTrue(result.TemplateID == authorId);
         }
 
         [TestMethod]
-        public void DatasourceOrSiteRootStrategyTests_test_valid_datasource_wrong_template()
+        public void DatasourceOrAscendantStrategyTests_test_valid_datasource_wrong_template()
         {
             var home = SitecoreFaker.Instance.Database.GetItem("/fakesitecore/content/home");
-            var strategy = new TestableDatasourceOrSiteRootStrategy("/fakesitecore/content/home");
+            var strategy = new TestableDatasourceOrAscendantStrategy();
 
             var result = strategy.Resolve("/fakesitecore/content/home/news-2016/mark-cassidy", home, "news");
             Assert.IsNull(result);
         }
 
         [TestMethod]
-        public void DatasourceOrSiteRootStrategyTests_test_invalid_datasource_test()
+        public void DatasourceOrAscendantStrategyTests_test_invalid_datasource_test()
         {
             var home = SitecoreFaker.Instance.Database.GetItem("/fakesitecore/content/home");
-            var strategy = new TestableDatasourceOrSiteRootStrategy("/fakesitecore/content/home");
-
-            var result = strategy.Resolve("/fakesitecore/content/home/news-2016/mark-cassidy!!111!!!oneoneone!", home);
-            Assert.IsNull(result);
+            var strategy = new TestableDatasourceOrAscendantStrategy();
 
             var home2 = SitecoreFaker.Instance.Database.GetItem("/fakesitecore/content/home/news-2016");
-            result = strategy.Resolve("/fakesitecore/content/home/news-2016/mark-cassidy!!111!!!oneoneone!", home2, "news");
+            var result = strategy.Resolve("/fakesitecore/content/home/news-2016/mark-cassidy!!111!!!oneoneone!", home2, "news");
             Assert.IsNull(result);
         }
 
         [TestMethod]
-        public void DatasourceOrSiteRootStrategyTests_test_blank_datasource_returns_null_with_wrong_template_for_site_root_item()
+        public void DatasourceOrAscendantStrategyTests_test_ascendancy_no_template()
         {
             var home = SitecoreFaker.Instance.Database.GetItem("/fakesitecore/content/home");
-            var strategy = new TestableDatasourceOrSiteRootStrategy("/fakesitecore/content/home");
+            var strategy = new TestableDatasourceOrAscendantStrategy();
 
-            var result = strategy.Resolve(null, home, "news");
+            var result = strategy.Resolve(null, home, "dafuq-this-doesnt-exist");
             Assert.IsNull(result);
         }
 
         [TestMethod]
-        public void DatasourceOrSiteRootStrategyTests_test_blank_datasource_returns_site_root_item_with_correct_template_for_site_root_item()
+        public void DatasourceOrAscendantStrategyTests_test_ascendancy_section_fallbacks()
         {
-            var home = SitecoreFaker.Instance.Database.GetItem("/fakesitecore/content/home");
+            var home = SitecoreFaker.Instance.Database.GetItem("/fakesitecore/content/home/section-1/contentpage-1");
             var section1 = SitecoreFaker.Instance.Database.GetItem("/fakesitecore/content/home/section-1");
-            var strategy = new TestableDatasourceOrSiteRootStrategy("/fakesitecore/content/home");
 
-            var result = strategy.Resolve(null, section1, "site root");
-            Assert.IsTrue(result.ID == home.ID);
+            var strategy = new TestableDatasourceOrAscendantStrategy();
+
+            var result = strategy.Resolve(null, home, "site root");
+            Assert.IsTrue(result.ID == section1.ID);
+
+            var content = SitecoreFaker.Instance.Database.GetItem("/fakesitecore/content");
+            result = strategy.Resolve(null, home, "content");
+            Assert.IsTrue(result.ID == content.ID);
         }
     }
 }

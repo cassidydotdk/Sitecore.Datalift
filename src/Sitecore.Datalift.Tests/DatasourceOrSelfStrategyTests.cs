@@ -1,5 +1,4 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Sitecore.Data;
 
 namespace Sitecore.Datalift.Tests
 {

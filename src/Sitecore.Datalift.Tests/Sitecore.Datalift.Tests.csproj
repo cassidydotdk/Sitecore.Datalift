@@ -90,6 +90,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
+    <Compile Include="DatasourceOrAscendantStrategyTests.cs" />
     <Compile Include="DatasourceOrSiteRootStrategyTests.cs" />
     <Compile Include="DatasourceOrSelfStrategyTests.cs" />
     <Compile Include="MethodUtil.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="MyItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SitecoreFaker.cs" />
+    <Compile Include="TestableDatasourceOrAscendantStrategy.cs" />
     <Compile Include="TestableDatasourceOrSiteRootStrategy.cs" />
     <Compile Include="TestableDatasourceOrSelfStrategy.cs" />
   </ItemGroup>

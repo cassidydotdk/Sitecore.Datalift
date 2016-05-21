@@ -5,6 +5,7 @@ namespace Sitecore.Datalift
 {
     public class DatasourceOrAscendantStrategy : BaseStrategy
     {
+        // ReSharper disable once OptionalParameterHierarchyMismatch
         public override Item Resolve([NotNull] string datasourceString, [NotNull] Item contextItem, [NotNull] string templateIdentifier)
         {
             // This strategy makes no sense, without knowing the base template we're after
@@ -17,10 +18,12 @@ namespace Sitecore.Datalift
             {
                 var datasourceItem = contextItem.Database.GetItem(datasourceString);
 
+#if !DEBUG
                 if (datasourceItem == null || datasourceItem.Versions.Count == 0)
                 {
                     datasourceItem = null;
                 }
+#endif
 
                 if (!InheritsTemplate(datasourceItem, templateIdentifier))
                     datasourceItem = null;
@@ -33,7 +36,7 @@ namespace Sitecore.Datalift
 
                 while (!InheritsTemplate(actionItem, templateIdentifier))
                 {
-                    actionItem = actionItem.Parent;
+                    actionItem = GetParent(actionItem);
                     if (actionItem == null)
                         break;
                 }

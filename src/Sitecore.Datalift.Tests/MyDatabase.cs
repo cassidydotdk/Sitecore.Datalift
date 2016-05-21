@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using Sitecore.Data;
 using Sitecore.Data.Items;
-using Sitecore.Shell.Framework.Commands;
 
 namespace Sitecore.Datalift.Tests
 {
     public class MyDatabase
     {
-        private readonly Database _innerDatabase;
         private static List<MyItem> _itemStorage;
         private static Dictionary<string, ID> _templateMap;
+        private readonly Database _innerDatabase;
 
         public MyDatabase(Database innerDatabase)
         {
@@ -22,7 +20,7 @@ namespace Sitecore.Datalift.Tests
         internal Item AddItem(MyItem item, string templateName, ID templateId)
         {
             _itemStorage.Add(item);
-            if(!_templateMap.ContainsKey(templateName))
+            if (!_templateMap.ContainsKey(templateName))
                 _templateMap.Add(templateName, templateId);
 
             return item;
