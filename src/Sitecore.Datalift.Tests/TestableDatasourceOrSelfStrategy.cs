@@ -7,10 +7,7 @@ namespace Sitecore.Datalift.Tests
     {
         protected override bool InheritsTemplate(Item candidate, string templateIdentifier)
         {
-            ID id = ID.Null;
-            if (MyDatabase.TemplateMap.ContainsKey(templateIdentifier))
-                id = MyDatabase.TemplateMap[templateIdentifier];
-
+            ID id = SitecoreFaker.Instance.MyDatabase.GetTemplateIdFromName(templateIdentifier);
             return candidate.TemplateID == id;
         }
     }

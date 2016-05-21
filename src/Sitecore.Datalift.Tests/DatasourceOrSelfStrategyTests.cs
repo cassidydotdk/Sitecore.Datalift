@@ -6,55 +6,49 @@ namespace Sitecore.Datalift.Tests
     [TestClass]
     public class DatasourceOrSelfStrategyTests
     {
-        private static readonly ID _authId = ID.NewID;
-        private static readonly ID _cateId = ID.NewID;
-        private static readonly ID _newsId = ID.NewID;
-        private static Database _db;
-
         [ClassInitialize]
         public static void Initialise(TestContext context)
         {
-            var root = SitecoreFaker.MakeItem("fakesitecore", ID.NewID, "root", null);
-            var content = SitecoreFaker.MakeItem("content", ID.NewID, "content", root);
-            var home = SitecoreFaker.MakeItem("home", ID.NewID, "site root", content);
-            var news2016 = SitecoreFaker.MakeItem("news-2016", _cateId, "category", home);
-            var news2017 = SitecoreFaker.MakeItem("news-2017", _cateId, "category", home);
+            var root = SitecoreFaker.Instance.MakeItem("fakesitecore", "root", null);
+            var content = SitecoreFaker.Instance.MakeItem("content", "content", root);
+            var home = SitecoreFaker.Instance.MakeItem("home", "site root", content);
+            var news2016 = SitecoreFaker.Instance.MakeItem("news-2016", "category", home);
+            var news2017 = SitecoreFaker.Instance.MakeItem("news-2017", "category", home);
 
-            var authCassidy = SitecoreFaker.MakeItem("mark-cassidy", _authId, "author", news2016);
-            var authFigy = SitecoreFaker.MakeItem("kam-figy", _authId, "author", news2016);
+            var authCassidy = SitecoreFaker.Instance.MakeItem("mark-cassidy", "author", news2016);
+            var authFigy = SitecoreFaker.Instance.MakeItem("kam-figy", "author", news2016);
 
-            var authReynolds = SitecoreFaker.MakeItem("mike-reynolds", _authId, "author", news2017);
-            var authScherrer = SitecoreFaker.MakeItem("daniel-scherrer", _authId, "author", news2017);
+            var authReynolds = SitecoreFaker.Instance.MakeItem("mike-reynolds", "author", news2017);
+            var authScherrer = SitecoreFaker.Instance.MakeItem("daniel-scherrer", "author", news2017);
 
-            SitecoreFaker.MakeItem("news-1", _newsId, "news", authCassidy);
-            SitecoreFaker.MakeItem("news-2", _newsId, "news", authScherrer);
-            SitecoreFaker.MakeItem("news-3", _newsId, "news", authFigy);
-            SitecoreFaker.MakeItem("news-4", _newsId, "news", authReynolds);
-            SitecoreFaker.MakeItem("news-5", _newsId, "news", news2016);
-            SitecoreFaker.MakeItem("news-6", _newsId, "news", news2017);
-
-            _db = SitecoreFaker.GetDatabase();
+            SitecoreFaker.Instance.MakeItem("news-1", "news", authCassidy);
+            SitecoreFaker.Instance.MakeItem("news-2", "news", authScherrer);
+            SitecoreFaker.Instance.MakeItem("news-3", "news", authFigy);
+            SitecoreFaker.Instance.MakeItem("news-4", "news", authReynolds);
+            SitecoreFaker.Instance.MakeItem("news-5", "news", news2016);
+            SitecoreFaker.Instance.MakeItem("news-6", "news", news2017);
         }
 
         [TestMethod]
         public void DatasourceOrSelfStrategyTests_test_valid_datasource()
         {
-            var home = _db.GetItem("/fakesitecore/content/home");
+            var home = SitecoreFaker.Instance.Database.GetItem("/fakesitecore/content/home");
 
+            var authorTemplateId = SitecoreFaker.Instance.MyDatabase.GetTemplateIdFromName("author");
             var strategy = new TestableDatasourceOrSelfStrategy();
             var result = strategy.Resolve("/fakesitecore/content/home/news-2016/mark-cassidy", home);
             Assert.IsNotNull(result);
-            Assert.IsTrue(result.TemplateID == _authId);
+            Assert.IsTrue(result.TemplateID == authorTemplateId, "Result (" + result.Name + ").TemplateID is " + result.TemplateID + ", expected: " + authorTemplateId);
 
             result = strategy.Resolve("/fakesitecore/content/home/news-2016/mark-cassidy", home, "author");
             Assert.IsNotNull(result);
-            Assert.IsTrue(result.TemplateID == _authId);
+            Assert.IsTrue(result.TemplateID == authorTemplateId);
         }
 
         [TestMethod]
         public void DatasourceOrSelfStrategyTests_test_valid_datasource_wrong_template()
         {
-            var home = _db.GetItem("/fakesitecore/content/home");
+            var home = SitecoreFaker.Instance.Database.GetItem("/fakesitecore/content/home");
 
             var strategy = new TestableDatasourceOrSelfStrategy();
             var result = strategy.Resolve("/fakesitecore/content/home/news-2016/mark-cassidy", home, "news");
@@ -64,13 +58,13 @@ namespace Sitecore.Datalift.Tests
         [TestMethod]
         public void DatasourceOrSelfStrategyTests_test_invalid_datasource_test()
         {
-            var home = _db.GetItem("/fakesitecore/content/home");
+            var home = SitecoreFaker.Instance.Database.GetItem("/fakesitecore/content/home");
 
             var strategy = new TestableDatasourceOrSelfStrategy();
             var result = strategy.Resolve("/fakesitecore/content/home/news-2016/mark-cassidy!!111!!!oneoneone!", home);
             Assert.IsNull(result);
 
-            home = _db.GetItem("/fakesitecore/content/home/news-2016");
+            home = SitecoreFaker.Instance.Database.GetItem("/fakesitecore/content/home/news-2016");
             result = strategy.Resolve("/fakesitecore/content/home/news-2016/mark-cassidy!!111!!!oneoneone!", home, "news");
             Assert.IsNull(result);
         }
@@ -78,7 +72,7 @@ namespace Sitecore.Datalift.Tests
         [TestMethod]
         public void DatasourceOrSelfStrategyTest_test_blank_datasource_falls_back_to_context_item_without_template()
         {
-            var home = _db.GetItem("/fakesitecore/content/home");
+            var home = SitecoreFaker.Instance.Database.GetItem("/fakesitecore/content/home");
 
             var strategy = new TestableDatasourceOrSelfStrategy();
             var result = strategy.Resolve(null, home);
@@ -88,7 +82,7 @@ namespace Sitecore.Datalift.Tests
         [TestMethod]
         public void DatasourceOrSelfStrategyTest_test_blank_datasource_returns_null_with_wrong_template_for_context_item()
         {
-            var home = _db.GetItem("/fakesitecore/content/home");
+            var home = SitecoreFaker.Instance.Database.GetItem("/fakesitecore/content/home");
 
             var strategy = new TestableDatasourceOrSelfStrategy();
             var result = strategy.Resolve(null, home, "news");
@@ -98,7 +92,7 @@ namespace Sitecore.Datalift.Tests
         [TestMethod]
         public void DatasourceOrSelfStrategyTest_test_blank_datasource_returns_contextitem_with_correct_template_for_context_item()
         {
-            var home = _db.GetItem("/fakesitecore/content/home/news-2016");
+            var home = SitecoreFaker.Instance.Database.GetItem("/fakesitecore/content/home/news-2016");
 
             var strategy = new TestableDatasourceOrSelfStrategy();
             var result = strategy.Resolve(null, home, "category");
@@ -108,7 +102,7 @@ namespace Sitecore.Datalift.Tests
         [TestMethod]
         public void DatasourceOrSelfStrategyTest_test_correct_datasource_returns_datasource_item_with_correct_template_for_context_item()
         {
-            var home = _db.GetItem("/fakesitecore/content/home/news-2016");
+            var home = SitecoreFaker.Instance.Database.GetItem("/fakesitecore/content/home/news-2016");
 
             var strategy = new TestableDatasourceOrSelfStrategy();
             var result = strategy.Resolve("/fakesitecore/content/home/news-2017", home, "category");
