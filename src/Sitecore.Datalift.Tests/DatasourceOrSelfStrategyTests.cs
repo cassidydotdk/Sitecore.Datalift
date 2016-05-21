@@ -115,6 +115,10 @@ namespace Sitecore.Datalift.Tests
             var result = strategy.Resolve("/fakesitecore/content/home/news-2017", home, "category");
             Assert.IsFalse(result.ID == home.ID);
             Assert.IsTrue(result.Name == "news-2017");
+
+            result = strategy.Resolve("  ", home, "category");
+            Assert.IsTrue(result.ID == home.ID);
+            Assert.IsTrue(result.Name == "news-2016");
         }
     }
 }
