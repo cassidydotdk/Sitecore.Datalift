@@ -28,6 +28,9 @@ namespace Sitecore.Datalift
                     datasourceItem = null;
                 }
 
+                if (!InheritsTemplate(datasourceItem, t))
+                    datasourceItem = null;
+
                 actionItem = datasourceItem;
             }
             else
