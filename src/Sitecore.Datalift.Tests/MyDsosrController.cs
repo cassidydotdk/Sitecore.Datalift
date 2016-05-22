@@ -1,5 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Sitecore.Data.Items;
+using Sitecore.Datalift.Strategies;
 
 namespace Sitecore.Datalift.Tests
 {

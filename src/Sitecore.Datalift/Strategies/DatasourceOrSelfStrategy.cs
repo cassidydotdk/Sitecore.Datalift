@@ -1,8 +1,7 @@
 ﻿using Sitecore.Data.Items;
-using Sitecore.Data.Templates;
 using Sitecore.Diagnostics;
 
-namespace Sitecore.Datalift
+namespace Sitecore.Datalift.Strategies
 {
     public class DatasourceOrSelfStrategy : BaseStrategy
     {

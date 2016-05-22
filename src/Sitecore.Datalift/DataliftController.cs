@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Sitecore.Data.Items;
+using Sitecore.Datalift.Strategies;
 using Sitecore.Diagnostics;
 
 namespace Sitecore.Datalift
@@ -22,6 +23,11 @@ namespace Sitecore.Datalift
             return new DatasourceOrSelfStrategy();
         }
 
+        protected virtual Item GetContextItem()
+        {
+            return Context.Item;
+        }
+
         protected virtual Item GetActionItem(string datasourceString = null, string templateIdentifier = null, Item contextItem = null, IDataliftStrategy strategy = null)
         {
             var att = GetStrategyAttribute();
@@ -40,7 +46,7 @@ namespace Sitecore.Datalift
                 strategy = GetDefaultStrategy();
 
             if (contextItem == null)
-                contextItem = Context.Item;
+                contextItem = GetContextItem();
 
             return strategy.Resolve(datasourceString, contextItem, templateIdentifier);
         }

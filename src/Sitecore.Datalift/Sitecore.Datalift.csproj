@@ -114,9 +114,9 @@
     <Compile Include="IDataliftAttribute.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="BaseStrategy.cs" />
-    <Compile Include="DatasourceOrAscendantStrategy.cs" />
-    <Compile Include="DatasourceOrSelfStrategy.cs" />
-    <Compile Include="DatasourceOrSiteRootStrategy.cs" />
+    <Compile Include="Strategies\DatasourceOrAscendantStrategy.cs" />
+    <Compile Include="Strategies\DatasourceOrSelfStrategy.cs" />
+    <Compile Include="Strategies\DatasourceOrSiteRootStrategy.cs" />
     <Compile Include="IDataliftStrategy.cs" />
   </ItemGroup>
   <PropertyGroup>

@@ -1,5 +1,6 @@
 ﻿using Sitecore.Data;
 using Sitecore.Data.Items;
+using Sitecore.Datalift.Strategies;
 
 namespace Sitecore.Datalift.Tests
 {

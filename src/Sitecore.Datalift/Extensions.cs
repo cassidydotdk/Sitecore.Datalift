@@ -1,5 +1,6 @@
 ﻿using System.Web.Mvc;
 using Sitecore.Data.Items;
+using Sitecore.Datalift.Strategies;
 using Sitecore.Diagnostics;
 using Sitecore.Mvc.Presentation;
 

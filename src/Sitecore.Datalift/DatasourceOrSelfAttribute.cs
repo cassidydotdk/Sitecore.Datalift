@@ -1,4 +1,5 @@
 ﻿using System;
+using Sitecore.Datalift.Strategies;
 
 namespace Sitecore.Datalift
 {
