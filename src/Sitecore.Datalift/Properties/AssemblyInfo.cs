@@ -6,10 +6,10 @@ using System.Runtime.InteropServices;
 // associated with an assembly.
 
 [assembly: AssemblyTitle("Sitecore.Datalift")]
-[assembly: AssemblyDescription("Sitecore utility library to help doing common data operations")]
+[assembly: AssemblyDescription("Sitecore utility library to help doing common datasource operations")]
 [assembly: AssemblyCompany("Cassidy Consult")]
 [assembly: AssemblyProduct("Sitecore.Datalift")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyCopyright("Copyright © 2016 Cassidy Consult / Mark Cassidy")]
 
 // Setting ComVisible to false makes the types in this assembly not visible 
 // to COM components.  If you need to access a type in this assembly from 
@@ -31,6 +31,6 @@ using System.Runtime.InteropServices;
 // You can specify all the values or you can default the Revision and Build Numbers 
 // by using the '*' as shown below:
 
-[assembly: AssemblyVersion("0.5.0.0")]
-[assembly: AssemblyFileVersion("0.5.0.0")]
-[assembly: AssemblyInformationalVersion("0.5.0.beta.RC1")]
+[assembly: AssemblyVersion("0.5.1.0")]
+[assembly: AssemblyFileVersion("0.5.1.0")]
+[assembly: AssemblyInformationalVersion("0.5.1.beta.RC2")]
