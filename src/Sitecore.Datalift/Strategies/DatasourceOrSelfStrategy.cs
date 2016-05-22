@@ -5,7 +5,7 @@ namespace Sitecore.Datalift.Strategies
 {
     public class DatasourceOrSelfStrategy : BaseStrategy
     {
-        public override Item Resolve([CanBeNull] string datasourceString, [NotNull] Item contextItem, [CanBeNull] string template = null)
+        public override Item Resolve([CanBeNull] string datasourceString, [NotNull] Item contextItem, [CanBeNull] string templateIdentifier = null)
         {
             Assert.ArgumentNotNull(contextItem, nameof(contextItem));
 
@@ -28,9 +28,9 @@ namespace Sitecore.Datalift.Strategies
                 actionItem = datasourceItem;
             }
 
-            if (actionItem != null && template != null)
+            if (actionItem != null && templateIdentifier != null)
             {
-                if (!InheritsTemplate(actionItem, template))
+                if (!InheritsTemplate(actionItem, templateIdentifier))
                 {
                     actionItem = null;
                 }
