@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<package >
+	<metadata>
+		<id>Sitecore.Datalift</id>
+		<version>$version$</version>
+		<authors>Mark Cassidy</authors>
+		<owners>Mark Cassidy</owners>
+		<licenseUrl>http://opensource.org/licenses/MIT</licenseUrl>
+		<projectUrl>https://github.com/cassidydotdk/Sitecore.Datalift</projectUrl>
+		<iconUrl>http://www.cassidy.dk/img/logo-64x64.png</iconUrl>
+		<requireLicenseAcceptance>false</requireLicenseAcceptance>
+		<description>Sitecore.Datalift is a set of strategies, a basecontroller and some extension methods - all designed to properly implement datasource resolution techniques that allow for flexible Sitecore Information Architecture and follow good implementation practices.</description>
+		<copyright>Copyright 2016</copyright>
+		<tags>sitecore datasource sitecore-mvc</tags>
+	<dependencies>
+	</dependencies>
+	</metadata>
+	<files>
+		<file src="readme.txt" target="" />
+	</files>
+</package>

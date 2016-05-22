@@ -12,3 +12,6 @@ Build/*.nupkg
 # Ignore user-scoped solution and project settings
 *.user
 *.suo
+
+# Node/Gulp
+/node_modules
