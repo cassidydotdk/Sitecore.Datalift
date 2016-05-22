@@ -40,6 +40,11 @@ namespace Sitecore.Datalift.Tests
         // ReSharper disable once ConvertToAutoProperty
         public static SitecoreFaker Instance => _instance;
 
+        public void CleanDatabases()
+        {
+            MyDatabase.Clean();
+        }
+
         public Item MakeItem(string name, string templateName, Item parentItem)
         {
             var id = ID.NewID;

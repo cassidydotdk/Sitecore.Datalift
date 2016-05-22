@@ -1,14 +1,48 @@
 ﻿using System.Web.Mvc;
 using Sitecore.Data.Items;
-using Sitecore.Mvc.Presentation;
+using Sitecore.Diagnostics;
 
 namespace Sitecore.Datalift
 {
     public class DataliftController : Controller
     {
-        protected virtual Item GetActionItem(string datasourceString, string templateIdentifier = null, Item contextItem = null, IDataliftStrategy strategy = null)
+        protected virtual IDataliftAttribute GetStrategyAttribute()
         {
-            return ((IController) this).GetActionItem(datasourceString, templateIdentifier, contextItem, strategy);
+            var customAttributes = GetType().GetCustomAttributes(typeof (IDataliftAttribute), false);
+            if (customAttributes.Length > 0)
+            {
+                return customAttributes[0] as IDataliftAttribute;
+            }
+
+            return null;
+        }
+
+        protected virtual IDataliftStrategy GetDefaultStrategy()
+        {
+            return new DatasourceOrSelfStrategy();
+        }
+
+        protected virtual Item GetActionItem(string datasourceString = null, string templateIdentifier = null, Item contextItem = null, IDataliftStrategy strategy = null)
+        {
+            var att = GetStrategyAttribute();
+
+            if (strategy == null && att != null)
+            {
+                strategy = att.Strategy;
+            }
+
+            if (templateIdentifier == null && att != null)
+            {
+                templateIdentifier = att.TemplateIdentifier;
+            }
+
+            if (strategy == null)
+                strategy = GetDefaultStrategy();
+
+            if (contextItem == null)
+                contextItem = Context.Item;
+
+            return strategy.Resolve(datasourceString, contextItem, templateIdentifier);
         }
     }
 }

@@ -2,7 +2,7 @@
 {
     public interface IDataliftAttribute
     {
-        string TemplateIdentifier { get; }
-        IDataliftStrategy Strategy { get; }
+        string TemplateIdentifier { get; set; }
+        IDataliftStrategy Strategy { get; set; }
     }
 }

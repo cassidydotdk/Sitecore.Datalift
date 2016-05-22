@@ -11,7 +11,7 @@ namespace Sitecore.Datalift
             Strategy = new DatasourceOrAscendantStrategy();
         }
 
-        public string TemplateIdentifier { get; }
+        public string TemplateIdentifier { get; set; }
         public IDataliftStrategy Strategy { get; set; }
     }
 }

@@ -1,6 +1,4 @@
-﻿using System.Diagnostics.Eventing.Reader;
-using Sitecore.Data.Items;
-using Sitecore.Data.Templates;
+﻿using Sitecore.Data.Items;
 using Sitecore.Diagnostics;
 
 namespace Sitecore.Datalift

@@ -8,6 +8,7 @@ namespace Sitecore.Datalift.Tests
         [ClassInitialize]
         public static void Initialise(TestContext context)
         {
+            SitecoreFaker.Instance.CleanDatabases();
             var root = SitecoreFaker.Instance.MakeItem("fakesitecore", "root", null);
             var content = SitecoreFaker.Instance.MakeItem("content", "content", root);
             var home = SitecoreFaker.Instance.MakeItem("home", "site root", content);
@@ -27,6 +28,13 @@ namespace Sitecore.Datalift.Tests
             SitecoreFaker.Instance.MakeItem("news-4", "news", authReynolds);
             SitecoreFaker.Instance.MakeItem("news-5", "news", news2016);
             SitecoreFaker.Instance.MakeItem("news-6", "news", news2017);
+        }
+
+        [ClassCleanup]
+        public static void Cleanup()
+        {
+            SitecoreFaker.Instance.CleanDatabases();
+            Assert.IsTrue(SitecoreFaker.Instance.Database.GetItem("/fakesitecore/content") == null);
         }
 
         [TestMethod]

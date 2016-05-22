@@ -42,5 +42,11 @@ namespace Sitecore.Datalift.Tests
         {
             return _itemStorage.Find(fi => fi.FullPath.Equals(identifier));
         }
+
+        public void Clean()
+        {
+            _itemStorage = new List<MyItem>();
+            _templateMap = new Dictionary<string, ID>();
+        }
     }
 }
