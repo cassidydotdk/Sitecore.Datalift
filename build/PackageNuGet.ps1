@@ -13,6 +13,6 @@ $solution = "$scriptRoot\..\Sitecore.Datalift.sln"
 $SitecoreDataliftAssembly = Get-Item "$scriptRoot\..\src\Sitecore.Datalift\bin\Sitecore.Datalift.dll" | Select-Object -ExpandProperty VersionInfo
 $targetAssemblyVersion = $SitecoreDataliftAssembly.ProductVersion
 
-& $nuGet pack "$scriptRoot\..\src\Sitecore.Datalift\Sitecore.Datalift.csproj" -Symbols -Prop "Configuration=Release"
+& $nuGet pack "$scriptRoot\..\src\Sitecore.Datalift\Sitecore.Datalift.csproj" -Symbols -Prop "Configuration=Release" -Exclude **/Web.config
 
 COPY *.nupkg "D:\NuGet Repository"
