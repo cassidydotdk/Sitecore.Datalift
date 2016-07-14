@@ -256,7 +256,7 @@ To be honest, the extension methods could probably easily do with some more work
 
 # Current Status #
 
-`Sitecore.Datalift` is being pushed to the public in a state I would consider "late beta". I don't expect any major changes to the API, but there's a few things I might want to extend a little bit further before a version 1.0 is released. Either way, 1.0 release is expected in 1-2 weeks (mid-June). Until then I encourage and highly welcome feedback.
+`Sitecore.Datalift` is being pushed to the public in a state I consider good enough for 1.0.0.0.  I've been using it myself on real projects for the past couple of weeks, and not experienced any unexpected behaviour.
 
 Find me on [Sitecore Slack](https://sitecorechat.slack.com/), or on Twitter ([@cassidydotdk](https://twitter.com/cassidydotdk))
 
