@@ -1,4 +1,5 @@
-﻿using Sitecore.Data.Items;
+﻿using System;
+using Sitecore.Data.Items;
 using Sitecore.Data.Managers;
 
 namespace Sitecore.Datalift
@@ -19,6 +20,9 @@ namespace Sitecore.Datalift
 
             var t = TemplateManager.GetTemplate(candidate);
             var y = TemplateManager.GetTemplate(templateIdentifier, candidate.Database);
+
+            if (y == null)
+                throw new Exception($"Invalid Template Identifier: \'{templateIdentifier}\'");
 
             return t.InheritsFrom(y.ID);
         }
